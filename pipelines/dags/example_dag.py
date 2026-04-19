@@ -1,6 +1,6 @@
 from airflow.decorators import dag
 from datetime import datetime
-from tasks.hello_task import get_server_info
+from tasks.example_dag.task1 import get_server_info
 
 
 @dag(
