@@ -1,13 +1,16 @@
-from airflow.decorators import dag
-from tasks.echandia.task1 import extraer, transformar, cargar
+from datetime import datetime
+from airflow import DAG
+from airflow.operators.bash import BashOperator
 
-@dag(
-    dag_id="echandia_exercise",
+with DAG(
+    dag_id="test_worker_ping",
+    start_date=datetime(2026, 1, 1),
     schedule=None,
     catchup=False,
-    tags=["example"],
-)
-def echandia_dag():
-    extraer() >> transformar() >> cargar()
-
-dag_instance = echandia_dag()
+    tags=["debug"],
+):
+    BashOperator(
+        task_id="ping_worker",
+        bash_command='echo "hola desde $(hostname)" && sleep 5',
+        queue="default",
+    )
